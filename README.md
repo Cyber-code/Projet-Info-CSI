@@ -3,15 +3,18 @@ Ensemble de nos fichiers pour notre projet d'informatique.
 Chaque dossier contient un composant du projet.
 
 Pour agent :
-	agent/
+	
+	
+    agent/
 	├── GPS_Fonction.py
 	├── boiteAoutils.py
 	└── test_agent.py
-	
-    Contient donc le code permettant la communication des agents dans "test_agent.py"
-    GPS_Fonction.py contient toute les fonctions permettant de determiner le chemin/distance pourl'agent.
+
+   Contient donc le code permettant la communication des agents dans "test_agent.py"
+   GPS_Fonction.py contient toute les fonctions permettant de determiner le chemin/distance pourl'agent.
 
 Pour consommateur :
+
 	ubeats/
 	├── __init__.py
 	├── boiteAoutils.py
@@ -43,7 +46,8 @@ Pour consommateur :
 	│   └── produit.html
 	└── ubeats.wsgi
 
-	./ubeats contient l'ensemble des fichiers pour le commercant ainsi que pour le site web (__init__.py pour ne citer que lui)
+	
+   ./ubeats contient l'ensemble des fichiers pour le commercant ainsi que pour le site web (__init__.py pour ne citer que lui)
 
 Pour consommateur :
 
@@ -51,5 +55,5 @@ Pour consommateur :
 	├── Commercant.py
 	└── boiteAoutils.py
 
-	Communication des commercants avec les autres composants du projet
+   Communication des commercants avec les autres composants du projet
 
