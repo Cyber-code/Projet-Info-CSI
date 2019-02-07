@@ -1,0 +1,169 @@
+function setup() {
+	scale = 2.4
+	scaleMaison = 2.1
+	createCanvas(scale*300, scale*300);
+}
+
+function draw() {
+	if(hasMap) {
+		background(240); // pour la couleur du fond
+		
+		// on récupère les données en JSON
+		// à retirer pour le code réel
+		var data_client = recup_client()
+		var data_map = recup_map()
+		var data_chemin = recup_chemin()
+		var data_bike = recup_bike()
+
+		// on trace la map
+		var map = JSON.parse(data_map)["map"]
+		
+		stroke(0, 0, 0) // lignes en noir
+		
+		for(var i = 0 ; i < map.length ; i++){
+			line(scale*map[i]["x1"], scale*map[i]["y1"], scale*map[i]["x2"], scale*map[i]["y2"])
+		}
+		
+		// on affiche le client
+		var client = JSON.parse(data_client)["user"]
+
+		client_x = client[0]["x"]
+		client_y = client[0]["y"]
+
+		maison(scale*client_x, scale*client_y, scale*3, scale*10, 5) // on affiche la maison du client
+		
+		// on affiche le chemin
+		var chemin = JSON.parse(data_chemin)["chemin"]
+		
+		stroke(255, 0, 0) // lignes en rouge
+		
+		for(var i = 0 ; i < chemin.length ; i++){
+			line(scale*chemin[i]["x1"], scale*chemin[i]["y1"], scale*chemin[i]["x2"], scale*chemin[i]["y2"])
+		}
+		
+		// on affiche le biker
+		var bike = JSON.parse(data_bike)["bike"]
+		
+		bike_x = bike[0]["x"]
+		bike_y = bike[0]["y"]
+
+		velo(scale*bike_x, scale*bike_y, scale*3, scale*10, 5); // on affiche le vélo du livreur
+		
+	} else {
+		text("Votre livreur n'a pas récupéré la commande", 100, 100)
+	}
+}
+
+function maison(x, y) {
+	beginShape();
+	
+	fill(50, 50, 50)
+	stroke(0, 0, 0)
+	
+	vertex(x-8*scaleMaison, y-8*scaleMaison)
+	vertex(x, y-13*scaleMaison)
+	vertex(x+8*scaleMaison, y-8*scaleMaison)
+	vertex(x+8*scaleMaison, y+6*scaleMaison)
+	vertex(x-8*scaleMaison, y+6*scaleMaison)
+	
+	endShape(CLOSE);
+	
+	fenetre(x-4*scaleMaison, y-5*scaleMaison)
+	fenetre(x+4*scaleMaison, y-5*scaleMaison)
+	
+	var marge = 20*scaleMaison
+	
+	// si on clique sur la maison
+	if(mouseIsPressed && mouseX < client_x*scale + marge && mouseX > client_x*scale - marge && mouseY < client_y*scale + marge && mouseY > client_y*scale - marge) {
+		bouche_contente(x, y+3*scaleMaison)
+		fenetre(x-4*scaleMaison, y-5*scaleMaison, 255, 0, 0)
+		fenetre(x+4*scaleMaison, y-5*scaleMaison, 255, 0, 0)
+	} else {
+		bouche_pas_contente(x, y+3*scaleMaison)
+		fenetre(x-4*scaleMaison, y-5*scaleMaison, 220, 220, 220)
+		fenetre(x+4*scaleMaison, y-5*scaleMaison, 220, 220, 220)
+	}
+}
+
+function bouche_pas_contente(x, y) {
+	beginShape();
+	
+	fill(220, 220, 220)
+	
+	vertex(x-5*scaleMaison, y+3*scaleMaison)
+	vertex(x-3*scaleMaison, y+3*scaleMaison)
+	vertex(x-3*scaleMaison, y+1*scaleMaison)
+	vertex(x+3*scaleMaison, y+1*scaleMaison)
+	vertex(x+3*scaleMaison, y+3*scaleMaison)
+	vertex(x+5*scaleMaison, y+3*scaleMaison)
+	vertex(x+5*scaleMaison, y-1*scaleMaison)
+	vertex(x-5*scaleMaison, y-1*scaleMaison)
+	
+	
+	endShape(CLOSE);
+}
+
+function bouche_contente(x, y) {
+	beginShape();
+	
+	fill(220, 220, 220)
+	
+	vertex(x-5*scaleMaison, y-3*scaleMaison)
+	vertex(x-3*scaleMaison, y-3*scaleMaison)
+	vertex(x-3*scaleMaison, y-1*scaleMaison)
+	vertex(x+3*scaleMaison, y-1*scaleMaison)
+	vertex(x+3*scaleMaison, y-3*scaleMaison)
+	vertex(x+5*scaleMaison, y-3*scaleMaison)
+	vertex(x+5*scaleMaison, y+1*scaleMaison)
+	vertex(x-5*scaleMaison, y+1*scaleMaison)
+	
+	
+	endShape(CLOSE);
+}
+
+function fenetre(x, y, r, g, b) {
+	beginShape();
+	
+	fill(r, g, b)
+	
+	vertex(x-2*scale, y-2*scale)
+	vertex(x-2*scale, y+2*scale)
+	vertex(x+2*scale, y+2*scale)
+	vertex(x+2*scale, y-2*scale)
+	
+	endShape(CLOSE);
+}
+
+function velo(x, y) {
+	
+	noFill()
+	stroke(0, 0, 0)
+	
+	// les roues du vélo
+	ellipse(x-6*scale, y+5*scale, 7*scale, 7*scale)	
+	ellipse(x+6*scale, y+5*scale, 7*scale, 7*scale)	
+	
+	fill(0, 0, 0)
+	
+	// la tête du cycliste
+	ellipse(x+2*scale, y-10*scale, 3*scale, 3*scale)
+	
+	beginShape();
+	
+	vertex(x-1*scale, y+4*scale)
+	vertex(x, y+4*scale)
+	vertex(x, y)
+	vertex(x-2*scale, y-2*scale)
+	vertex(x+1*scale, y-5*scale)
+	vertex(x+3*scale, y-3*scale)
+	vertex(x+6*scale, y-3*scale)
+	vertex(x+6*scale, y-4*scale)
+	vertex(x+3*scale, y-4*scale)
+	vertex(x-1*scale, y-8*scale)
+	vertex(x-6*scale, y-3*scale)
+	vertex(x-1*scale, y+2*scale)
+	
+	vertex(x-1*scale, y+4*scale)
+	
+	endShape(CLOSE);
+}

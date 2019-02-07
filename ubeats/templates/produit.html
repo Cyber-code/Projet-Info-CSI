@@ -1,0 +1,11 @@
+<div class="row">
+    {% for prod in Listeproduits %}
+    <div class="col-md-3 col-sm-12  align-self-center prod">
+        <img src="../static/prod.png" alt="plat" class="plat">
+        <p id="title">{{prod.Name}}</p>
+        <p >Prix : <span id="Prix">{{prod.Price}}</span> </p>
+        <button class="btn btn-success">Commander</button>
+        <p class="hide"id="nbProduct">{{prod.id}}</p>
+    </div>
+    {% endfor %}
+</div>

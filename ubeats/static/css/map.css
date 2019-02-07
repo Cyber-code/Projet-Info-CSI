@@ -1,0 +1,52 @@
+.hide{
+    display: none;
+}
+
+body, html
+{
+	height: 100%;
+	width: 100%;
+}
+
+.info{
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    color: white;
+    background-color: rgba(0, 0, 0, .5);
+    font-size: 25px;
+
+}
+
+.info img{
+    height: 500px;
+    padding: 50px;
+}
+
+body{
+	position: relative;	
+}
+
+body::before 
+{
+	position: absolute;
+	content: '';
+	
+	top: 0;
+	left: 0;
+	
+	width: 100%; 
+    height: 100%;
+    
+    z-index: -10;
+	
+	background:url( "../burger.jpg") no-repeat center;
+	background-size: cover;
+	-webkit-filter: blur(6px) brightness(75%);
+    -moz-filter: blur(6px) brightness(75%);
+    -o-filter: blur(6px) brightness(75%);
+    -ms-filter: blur(6px) brightness(75%);
+    filter: blur(6px) brightness(75%);
+}
